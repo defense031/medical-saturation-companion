@@ -1,0 +1,153 @@
+<!-- Posture / crossover companion panel. Self-contained fragment: prose + an
+     SVG crossover chart driven by the model's VALIDATED outputs (Table D-1,
+     posture_surface.csv). The panel READS precomputed results; it does not
+     recompute live. Registered in build_unified.py as a prose panel. -->
+<style>
+  .pcx-wrap{max-width:920px}
+  .pcx-ctl{display:flex;flex-wrap:wrap;gap:18px;align-items:center;margin:6px 0 4px}
+  .pcx-seg button{border:1px solid var(--line);background:#fff;color:var(--mut);font-weight:700;
+    font-size:13px;padding:6px 12px;border-radius:8px;cursor:pointer;margin-right:4px}
+  .pcx-seg button.on{background:#fbf0f0;border-color:#e3b8b8;color:var(--accent)}
+  .pcx-airwrap{flex:1;min-width:240px}
+  .pcx-airwrap label{font-size:12px;color:var(--mut);font-weight:700;display:block;margin-bottom:2px}
+  .pcx-airwrap input[type=range]{width:100%}
+  .pcx-read{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+  .pcx-stat{flex:1;min-width:150px;border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:#fff}
+  .pcx-stat .k{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--mut);font-weight:700}
+  .pcx-stat .v{font-size:22px;font-weight:800;margin-top:2px}
+  .pcx-cons{color:var(--accent)} .pcx-dist{color:var(--accent2)}
+  .pcx-verdict{font-size:15px;font-weight:700;margin-top:10px}
+  .pcx-chart{width:100%;height:auto;display:block;margin-top:6px}
+  .pcx-chart text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+</style>
+
+<h2>Posture: consolidate or distribute?</h2>
+
+<div class="card pcx-wrap">
+  <p>The Army holds a fixed amount of forward surgery. It can <b>consolidate</b> that capacity into a few
+  large hospitals or <b>distribute</b> it into many small forward teams. Consolidation pools servers: a
+  larger team idles less between cases and works off a surge faster. Distribution shortens the trip: the
+  wounded travel less distance to a table. Which one saves more lives depends on whether the Army holds air
+  superiority.</p>
+  <p class="note">Air superiority decides which posture wins. Drag the control to watch the curves cross;
+  each point is the model's validated rate per 1,000 reaching surgery (Table D-1). Switch loads to see the
+  crossover hold from Korea to Italy.</p>
+</div>
+
+<div class="card pcx-wrap">
+  <div class="pcx-ctl">
+    <div class="pcx-seg" id="pcx-load">
+      <button data-load="Korea">Korea &middot; &rho;=0.21</button>
+      <button data-load="Europe" class="on">WWII Europe &middot; &rho;=0.59</button>
+      <button data-load="Italy">WWII Italy &middot; &rho;=0.94</button>
+    </div>
+    <div class="pcx-airwrap">
+      <label for="pcx-air">Air contest: <span id="pcx-airlbl">air owned</span></label>
+      <input type="range" id="pcx-air" min="0" max="100" value="0">
+    </div>
+  </div>
+
+  <svg id="pcx-svg" class="pcx-chart" viewBox="0 0 660 400" role="img"
+       aria-label="Preventable deaths per 1000 versus air contest for consolidated and distributed postures"></svg>
+
+  <div class="pcx-read">
+    <div class="pcx-stat"><div class="k">Consolidated &middot; 1 hospital</div><div class="v pcx-cons" id="pcx-vc">&ndash;</div></div>
+    <div class="pcx-stat"><div class="k">Distributed &middot; 8 teams</div><div class="v pcx-dist" id="pcx-vd">&ndash;</div></div>
+    <div class="pcx-stat"><div class="k">Better posture</div><div class="v" id="pcx-best">&ndash;</div></div>
+  </div>
+  <div class="pcx-verdict" id="pcx-verdict"></div>
+  <div class="legend">Faint gray lines are the in-between postures (2 and 4 nodes); more nodes trade pooling
+  efficiency for proximity. Crossover is where the consolidated and distributed curves meet.</div>
+</div>
+
+<script>
+(function(){
+  var KS=[1,2,4,8];
+  // VALIDATED outputs: preventable deaths / 1,000 reaching surgery, by [K1,K2,K4,K8].
+  // Source: model/posture_surface.csv (Table D-1). perm/deg/cont = the three sourced air levels.
+  var DATA={
+    Korea: {rho:"0.21", perm:[215,220,242,281], deg:[328,323,320,339], cont:[499,480,465,454]},
+    Europe:{rho:"0.59", perm:[219,233,258,296], deg:[331,327,329,347], cont:[499,480,464,457]},
+    Italy: {rho:"0.94", perm:[230,246,270,308], deg:[333,333,340,357], cont:[499,477,463,458]}
+  };
+  var st={load:"Europe", t:0};
+  var svg=document.getElementById('pcx-svg');
+  var W=660,H=400,L=58,R=18,T=18,B=48,PW=W-L-R,PH=H-T-B,VMIN=180,VMAX=520;
+  function X(t){return L+t*PW;}
+  function Y(v){return T+(VMAX-v)/(VMAX-VMIN)*PH;}
+  function airs(){var d=DATA[st.load];return [d.perm,d.deg,d.cont];}
+  function val(kIdx,t){var a=airs(),v0,v1,f;
+    if(t<=0.5){v0=a[0][kIdx];v1=a[1][kIdx];f=t/0.5;}else{v0=a[1][kIdx];v1=a[2][kIdx];f=(t-0.5)/0.5;}
+    return v0+(v1-v0)*f;}
+  function crossT(){var prev=val(0,0)-val(3,0),pt=0;
+    for(var i=1;i<=400;i++){var t=i/400,d=val(0,t)-val(3,t);
+      if(prev<0&&d>=0)return pt+(t-pt)*(-prev)/(d-prev);prev=d;pt=t;}
+    return null;}
+  function airLabel(t){
+    if(t<0.04)return "air owned (permissive)";
+    if(t>0.96)return "air denied (contested)";
+    if(Math.abs(t-0.5)<0.04)return "degraded";
+    return Math.round(t*100)+"% contested";}
+  function poly(kIdx){var a=airs();
+    return [[0,a[0][kIdx]],[0.5,a[1][kIdx]],[1,a[2][kIdx]]].map(function(p){return X(p[0]).toFixed(1)+","+Y(p[1]).toFixed(1);}).join(" ");}
+  function esc(){return "";}
+  function draw(){
+    var s="";
+    // y gridlines + labels
+    [200,300,400,500].forEach(function(v){var y=Y(v).toFixed(1);
+      s+='<line x1="'+L+'" y1="'+y+'" x2="'+(W-R)+'" y2="'+y+'" stroke="#e7ebf0" stroke-width="1"/>';
+      s+='<text x="'+(L-8)+'" y="'+(Y(v)+4).toFixed(1)+'" font-size="11" fill="#5b6672" text-anchor="end">'+v+'</text>';});
+    // x ticks
+    [["0","Permissive","start"],["0.5","Degraded","middle"],["1","Contested","end"]].forEach(function(p){var t=parseFloat(p[0]);
+      s+='<text x="'+X(t).toFixed(1)+'" y="'+(H-22)+'" font-size="11.5" fill="#5b6672" text-anchor="'+p[2]+'">'+p[1]+'</text>';});
+    s+='<text x="'+((L+W-R)/2).toFixed(1)+'" y="'+(H-4)+'" font-size="11.5" fill="#1a1f25" text-anchor="middle" font-weight="700">Air contest  (0 = air superiority &#8594; 1 = air denied)</text>';
+    s+='<text transform="translate(14,'+(T+PH/2).toFixed(1)+') rotate(-90)" font-size="11.5" fill="#1a1f25" text-anchor="middle" font-weight="700">Preventable deaths / 1,000</text>';
+    // crossover guide
+    var tc=crossT();
+    if(tc!=null){var vc=val(0,tc);
+      s+='<line x1="'+X(tc).toFixed(1)+'" y1="'+T+'" x2="'+X(tc).toFixed(1)+'" y2="'+(T+PH)+'" stroke="#9aa4af" stroke-width="1" stroke-dasharray="4 3"/>';
+      s+='<circle cx="'+X(tc).toFixed(1)+'" cy="'+Y(vc).toFixed(1)+'" r="5" fill="#fff" stroke="#1a1f25" stroke-width="1.5"/>';
+      s+='<text x="'+X(tc).toFixed(1)+'" y="'+(T+12)+'" font-size="10.5" fill="#1a1f25" text-anchor="middle">crossover '+tc.toFixed(2)+'</text>';}
+    // faint inner postures K2,K4
+    [1,2].forEach(function(ki){s+='<polyline points="'+poly(ki)+'" fill="none" stroke="#c2cad3" stroke-width="1.5"/>';});
+    // main lines
+    s+='<polyline points="'+poly(0)+'" fill="none" stroke="#7a1f1f" stroke-width="2.6"/>';
+    s+='<polyline points="'+poly(3)+'" fill="none" stroke="#16607a" stroke-width="2.6"/>';
+    [[0,"#7a1f1f"],[3,"#16607a"]].forEach(function(p){[0,0.5,1].forEach(function(t){
+      s+='<circle cx="'+X(t).toFixed(1)+'" cy="'+Y(val(p[0],t)).toFixed(1)+'" r="3.5" fill="'+p[1]+'"/>';});});
+    // cursor
+    var t=st.t;
+    s+='<line x1="'+X(t).toFixed(1)+'" y1="'+T+'" x2="'+X(t).toFixed(1)+'" y2="'+(T+PH)+'" stroke="#1a1f25" stroke-width="1.2" opacity="0.55"/>';
+    s+='<circle cx="'+X(t).toFixed(1)+'" cy="'+Y(val(0,t)).toFixed(1)+'" r="5" fill="#7a1f1f" stroke="#fff" stroke-width="1.5"/>';
+    s+='<circle cx="'+X(t).toFixed(1)+'" cy="'+Y(val(3,t)).toFixed(1)+'" r="5" fill="#16607a" stroke="#fff" stroke-width="1.5"/>';
+    // inline labels for the two lines (at left edge)
+    s+='<text x="'+(X(0)+6)+'" y="'+(Y(airs()[0][0])+16).toFixed(1)+'" font-size="11" fill="#7a1f1f" font-weight="700" style="paint-order:stroke;stroke:#ffffff;stroke-width:3.5px;stroke-linejoin:round">Consolidated</text>';
+    s+='<text x="'+(X(0)+6)+'" y="'+(Y(airs()[0][3])-10).toFixed(1)+'" font-size="11" fill="#16607a" font-weight="700" style="paint-order:stroke;stroke:#ffffff;stroke-width:3.5px;stroke-linejoin:round">Distributed</text>';
+    svg.innerHTML=s;
+  }
+  function readout(){
+    var c=val(0,st.t),d=val(3,st.t),diff=c-d;
+    document.getElementById('pcx-vc').textContent=Math.round(c);
+    document.getElementById('pcx-vd').textContent=Math.round(d);
+    var best=document.getElementById('pcx-best');
+    var v=document.getElementById('pcx-verdict');
+    var tc=crossT();
+    if(Math.abs(diff)<1){best.textContent="even";best.className="v";}
+    else if(diff>0){best.textContent="distribute";best.className="v pcx-dist";}
+    else{best.textContent="consolidate";best.className="v pcx-cons";}
+    var side = (tc==null)?"" : (st.t<tc
+        ? "Air is owned enough that pooling wins: <b class='pcx-cons'>consolidate</b>."
+        : "Air is contested enough that proximity wins: <b class='pcx-dist'>distribute</b>.");
+    v.innerHTML="At "+airLabel(st.t)+", consolidating loses "+Math.round(c)+
+      " and distributing loses "+Math.round(d)+" per 1,000. "+side;
+    document.getElementById('pcx-airlbl').textContent=airLabel(st.t);
+  }
+  function refresh(){draw();readout();}
+  document.getElementById('pcx-air').addEventListener('input',function(){st.t=(+this.value)/100;refresh();});
+  Array.prototype.forEach.call(document.querySelectorAll('#pcx-load button'),function(b){
+    b.addEventListener('click',function(){
+      Array.prototype.forEach.call(document.querySelectorAll('#pcx-load button'),function(x){x.classList.remove('on');});
+      b.classList.add('on');st.load=b.dataset.load;refresh();});});
+  refresh();
+})();
+</script>

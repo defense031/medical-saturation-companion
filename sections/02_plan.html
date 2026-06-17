@@ -1,0 +1,118 @@
+<h2>2 · Plan</h2>
+<p>The question, the hypotheses, and the limits were all fixed before the model ran.</p>
+
+<h3>The research question</h3>
+<div class="card rq">
+  <div class="lbl">The research question</div>
+  <div class="q">In a great-power war, does the casualty rate outrun the Army's forward surgical capacity, and at what point does it break?</div>
+  <div class="precise">Made precise: find the casualty arrival rate $\lambda^{*}$ at which forward surgical capacity saturates, and the rate at which the wounded die-of-wounds once it does, both as a function of how long contested transport holds casualties before evacuation.</div>
+</div>
+<p>The answer is three numbers:</p>
+<ul>
+  <li>The threshold $\lambda^{*}$ at which operating-table-hours saturate (utilization $\rho\to 1$) and the died-of-wounds fraction transitions sharply.</li>
+  <li>The curve $\text{DOW}(\lambda,T)$ above that threshold: how many more die per increment of overload.</li>
+  <li>The evacuation-policy sensitivity $\partial\,\text{DOW}/\partial T$: added deaths per added holding-day.</li>
+</ul>
+<p>Scope is the forward surgical node in a single theater, concretely the <b>Forward Resuscitative Surgical Detachment (FRSD)</b>, the surgical team that augments a Role 2 Enhanced medical company, whose published signature (2 tables, 135 min/case, ~10 cases/24 h) sets the capacity throughout. The roles-of-care tandem (FRSD &rarr; post-surgical holding &rarr; onward) enters as an extension. Downstream, strategic aeromedical-evacuation lift out of theater binds before beds do, because definitive-care beds flex and offload to civilian systems while the airlift fleet does not. Sizing that fleet is an adjacent problem we leave to other work.</p>
+
+<h3>How the question answers each sponsor ask</h3>
+<p>Each clause of the two sponsor questions maps onto a parameter or a hypothesis.</p>
+<table class="cross">
+  <tr><th>The sponsor's operative clause</th><th>How the model answers it, specifically</th></tr>
+  <tr><td>Q187: "high casualty rates sustained in a short period"</td><td>The arrival stream $\lambda(t)$. Lower-intensity offensive rates from ATP 4-02.55 (Table D-4h, Korea, WIA ≈ 3.54/1,000/day)<sup class="cite"><a onclick="return goCite('r-atp40255')" href="#r-atp40255">ATP&nbsp;4-02.55</a></sup> and Jones's echelon rates<sup class="cite"><a onclick="return goCite('r-jones')" href="#r-jones">Jones'19</a></sup> set $\lambda$; "short period" is the time-varying burst ($M_t$). The lead test is the inequality $\lambda_{\text{obs}}>\lambda^{*}$.</td></tr>
+  <tr><td>Q187: "contested domains <i>or burgeoning logistical requirements</i> … prevent the rapid evacuation of the wounded"</td><td>Two failure modes, taken separately. <i>Contested domains</i> degrade the forward leg, point of injury to the node: the threat-limited air-superiority axis, where the wounded die in transit. <i>Burgeoning logistical requirements</i> saturate the rearward leg, out of theater: the capacity-limited strategic-airlift axis, where stabilized patients back up for want of airframes. Both lengthen time-in-system $T$ (FM 4-02 §8-5)<sup class="cite"><a onclick="return goCite('r-fm402')" href="#r-fm402">FM&nbsp;4-02</a></sup> and turn waiting into death; the model returns $\partial\,\text{DOW}/\partial T$ and the air-evac sensitivity (H4).</td></tr>
+  <tr><td>Q187: "Assess the strategic impact"</td><td>The estimand made numeric: $\lambda^{*}$, the casualty rate at which the golden-hour regime collapses, and the curve $\text{DOW}(\lambda,T)$. The impact is a rate and a death fraction.</td></tr>
+  <tr><td>Q522: "What structural or organizational adjustments are necessary"</td><td>The binding-constraint result (H3): operating-table-hours saturate before beds, so the adjustment is surgical throughput, teams and tables, the very thing the force does not report. $\lambda^{*}=s\mu$ sets how much.</td></tr>
+  <tr><td>Q522: "to account for the expected casualties of modern war"</td><td>$\lambda$ is calibrated to observed LSCO and peer data, so the capacity target $s\mu \ge \lambda_{\text{obs}}$ is explicit and checkable.</td></tr>
+  <tr><td>Q232 (sibling): "high casualty producing munitions … MASCAL … in an A2AD environment"</td><td>The batch/surge variant: large arrival pulses under the same contested-rear lever. Addressed as an extension; the sandbox's burst mode previews it.</td></tr>
+</table>
+<p class="note">Q522 is broad. The model answers its resourcing core, what to grow and by how much, and frames the wider organizational design.</p>
+
+<h3>Pre-registered hypotheses</h3>
+<p>Ordered so the lead claim is checkable against data that exists.</p>
+<div class="hyp"><b>H1: saturation is a within-pulse phenomenon (the checkable lead).</b> On daily-average load a single doctrinal node keeps margin even at high-intensity <i>offensive</i> rates; it saturates inside the engagement <i>pulse</i>, the great-power regime Q187 names, where casualties arrive far faster than tables turn over:
+  $$\lambda_{\text{peak}} \;\gg\; s\mu \quad\text{inside the battle pulse.}$$
+  <span class="note">The calibration audit ran this check. The offensive WIA rate runs roughly 3–4× the lower-intensity rate (9.74–15.6 vs 3.54/1,000/day), but at a defensible surgical fraction the daily-average load stays under capacity: $\rho\approx 0.2$ at the Korea rate and $\rho\approx 0.4$–$0.8$ at WWII-offensive rates ($f_{\text{surg}}=0.10$–$0.12$, $s\mu=10$/day). The burst is what saturates the node while the daily-average load still has room: a measured pulse (Soroka 83 casualties/hr) exceeds node throughput (~0.4 surgical cases/hr) by one-to-two orders of magnitude, sharpened by $\mu$-degradation under a contested forward fight (see <a href="#" onclick="showPanel('results');return false">Results</a>). Falsified if the node absorbs the engaged-echelon pulse without died-of-wounds rising.</span>
+</div>
+<div class="hyp"><b>H2: the cliff.</b> Past the threshold, died-of-wounds rises sharply, an elbow in the curve:
+  $$\text{DOW}(\lambda)\;\approx\;\left(1-\frac{s\mu}{\lambda}\right)^{\!+}.$$
+  <span class="note"><b>Computed</b> (<a href="#" onclick="showPanel('results');return false">Results</a>): the threshold location holds at $\lambda^{*}=s\mu$ and the fluid law is the above-threshold asymptote, but the survival clock <i>softens</i> the kink, since abandonment is nonzero below $\rho=1$ (casualties renege while waiting). The elbow holds its location and bends more gently than the idealized law. Falsified if no transition appears; one does.</span>
+</div>
+<div class="hyp"><b>H3: the binding constraint.</b> At the threshold, what binds is operating-table-hours. <span class="note">Falsified if beds saturate first under doctrinal ratios.</span></div>
+<div class="hyp"><b>H4: the evacuation-timeline lever.</b> Lengthening the time $T$ from wounding to surgery raises DOW at fixed $\lambda$:
+  $$\frac{\partial\,\text{DOW}}{\partial T} \;>\; 0.$$
+  <span class="note"><b>Computed and validated</b> (<a href="#" onclick="showPanel('results');return false">Results</a>): $\partial\,\text{DOW}/\partial T$ is steep and positive, ~16 mortality points per added hour in the first hour, flattening as it saturates, so the golden hour falls out of the model. The Gaza (fast) / Ukraine (slow) bracket reproduces the direction. <b>Disentanglement:</b> the pre-registered $T$ is the <i>forward</i> timeline (time-to-surgery), which the bracket tests; this hypothesis as first written also gestured at the doctrinal <i>rear</i> "days held" (ATP 4-02.55 Table D-1's rising "died-in-hospital" factor), but that rear effect is the emergent back-pressure of Results Finding 4, reported as structure.</span>
+</div>
+<p class="note">The two to defend hardest in review: H1's checkable inequality and H3's binding-constraint flip.</p>
+
+<h3>The go/no-go test</h3>
+<div class="card" style="border-left:5px solid var(--good)">
+  Everything downstream depends on one inequality, computable from data in hand:
+  <div class="eqbox">$$\lambda_{\text{obs}} \;\overset{?}{>}\; s\mu.$$</div>
+  Compute $s\mu$ for a doctrinal node from ATP 4-02.25, compare to echelon casualty rates against published surgical throughput. The inequality clears, and the full estimand follows from the model: $\lambda^{*}=s\mu$, the DOW elbow, and the evacuation-timeline slope $\partial\,\text{DOW}/\partial T$ are computed in <a href="#" onclick="showPanel('results');return false">Results</a>.
+</div>
+
+<h2>Constraints, limitations, assumptions</h2>
+
+<h3>Assumptions behind the sharp tipping point</h3>
+<div class="frame">
+  <p style="margin:0 0 6px"><b>If X, Y, Z hold, then</b> the node has a saturation tipping point at $\lambda^{*}=s\mu$: below it DOW is wound-limited and nearly flat in $\lambda$; above it DOW rises as $\approx(1-s\mu/\lambda)^{+}$.</p>
+  <ul style="margin:6px 0 0">
+    <li><b>X: tables bind before beds.</b> The flow constraint (operating-table-hours) saturates before the stock constraint (holding beds). If beds bind first, the threshold and the governing lever change.</li>
+    <li><b>Y: above-threshold DOW is waiting-dominated.</b> Once overloaded, the marginal death is a reneging death (ran out of survival window in the queue).</li>
+    <li><b>Z: work-conserving triage; finite-mean service and survival.</b> No table sits idle while a casualty waits, and $1/\mu$ and $\theta$ have finite means. This makes the overload limit clean and distribution-free to first order.</li>
+  </ul>
+</div>
+<p>The modeling choices, each varied in a sensitivity check rather than fit to the data:</p>
+<ul>
+  <li>Queue discipline: the baseline engine serves first-in-first-out within the waiting bay; severity-priority table precedence and air-slot triage are implemented in a committed precedence engine (<code>triage_test.js</code>), and the precedence result (modest, rule-dependent, with naive "sickest-first" air routing backfiring) is reported in <a href="#" onclick="showPanel('results');return false">Results</a>.</li>
+  <li>Arrival process: nonstationary / batch to match the observed pulses, with plain-Poisson as a robustness comparison.</li>
+  <li>Service model: $M/M/c+M$ (Erlang-A) for the closed-form threshold; $M/G/c+G$ (Whitt fluid) for the distribution-general check.</li>
+  <li>One representative node, stationary within a battle pulse; the network is future work.</li>
+</ul>
+
+<h3>Constraints: the hard bounds that fence the levers</h3>
+<ul>
+  <li><b>Wound biology</b>: the survival window $\theta(\text{severity})$ is physiology (hemorrhage timelines, the golden hour). We race it.</li>
+  <li><b>Minimum service time $1/\mu$</b>: damage-control surgery takes what it takes (Hall: ~94–206 min by ISS)<sup class="cite"><a onclick="return goCite('r-hall')" href="#r-hall">Hall'23</a></sup>. Compressible only so far.</li>
+  <li><b>Surgical-team inventory</b>: the total pool of teams caps the capacity-allocation lever.</li>
+  <li><b>Lift / transport</b>: forward casualty evacuation under contested air, and strategic airlift out of theater, caps evacuation throughput and so caps how short the evacuation policy can be.</li>
+  <li><b>Three endurance limits, kept distinct:</b> (a) the <i>patient-holding window</i>, the FRSD/Role 2 holds a casualty up to 72 h before onward evacuation (ATP 4-02.5); (b) the <i>equipment-set endurance</i>, ≈30 cases / 72 h before the detachment must rest and resupply (ATP 4-02.25)<sup class="cite"><a onclick="return goCite('r-atp40225')" href="#r-atp40225">ATP&nbsp;4-02.25</a></sup>; (c) the <i>Role 1 / casualty-collection-point hold</i> that prolonged field care imposes forward when evacuation fails. The first two bound sustained $\mu$; the third is the forward-axis lever (see <a href="#" onclick="showPanel('results');return false">Results</a>).</li>
+</ul>
+
+<h3>Limitations: what the study cannot settle</h3>
+<div class="limit"><b>The DOW magnitude is unvalidated.</b> No one publishes contested-rear <i>clinical</i> DOW rates, and Ukraine's outcome denominators are closed. The DOW <i>magnitude</i> is therefore a derived output with no real-world figure to check it against. The threshold $\lambda^{*}=s\mu$ is capacity against arrivals; it does not depend on the unobserved survival rate at all. That rate sets only the steepness of the curve above the threshold, so the saturation point holds whatever its true value. Because the magnitude cannot be validated directly, we lead with the checkable inequality $\lambda_{\text{obs}}>s\mu$ and treat the DOW curve as its consequence, then constrain that curve two ways. The two real cases bracket it: Gaza (short hold, copes, CFR 6.7%) and Ukraine (long hold, prehospital death dominates). A sweep then runs the unobserved rate over a bounded range fixed by the TML+ curves, the FM 4-02 evacuation-policy days, and the observed Ukraine hours-to-days.</div>
+<div class="flag"><b>The open parameter: $f_{\text{surg}}$.</b> The fraction of WIA needing forward surgery lives in the CUI estimator tools (MCET / MPTk), outside open doctrine. Converging open anchors pin it: ≈$0.10$–$0.12$ as a fraction of all WIA (the FST "10–15% of WIA need surgery" planning factor; Soroka's measured ~12% of arrivals), rising to ≈$0.20$–$0.34$ as the operative fraction of casualties who actually <i>present</i> to the node (Staudt, n≈11,000). Which value applies depends on the denominator, and the daily-average load moves with it, but the saturation finding rides on the within-pulse burst, so it survives across the bracket.</div>
+
+<h3>Parameters: pinned from outside the model, or tested inside it</h3>
+<p>The capacity numbers and the casualty rates are pinned by published doctrine and observed data. Only the modeling choices above are ours, and we report across them.</p>
+<h4><span class="tagA">Fixed by published doctrine</span></h4>
+<table>
+  <tr><th>Parameter</th><th>Doctrinal source</th><th>Value / role</th></tr>
+  <tr><td>Surgical service capacity ($s$, $\mu$)</td><td>ATP 4-02.25 <i>FRSD</i>, Table 4-1 + para 2-3 <sup class="cite"><a onclick="return goCite('r-atp40225')" href="#r-atp40225">ATP&nbsp;4-02.25</a></sup></td><td><b>2 operating tables</b>; <b>135 min/case</b>; sustained cap <b>10 cases/24 h</b> / <b>30 cases/72 h</b> before rest-and-resupply. This is $s\mu$.</td></tr>
+  <tr><td>Patient-holding window</td><td>ATP 4-02.5 <i>Casualty Care</i> <sup class="cite"><a onclick="return goCite('r-atp4025')" href="#r-atp4025">ATP&nbsp;4-02.5</a></sup></td><td>The FRSD/Role 2 holds a patient up to 72 h before onward evacuation, capping queue residence at the node. Distinct from the equipment-set endurance (30 cases/72 h) and the Role 1 prolonged-field-care hold.</td></tr>
+  <tr><td>Theater evacuation policy (days held before onward evac)</td><td>FM 4-02 §8-5 (7-day worked example); JP 4-02 <sup class="cite"><a onclick="return goCite('r-fm402')" href="#r-fm402">FM&nbsp;4-02</a></sup></td><td>The lever. SecDef-set, in days; sets time-in-system, which maps to the abandonment rate $\theta$.</td></tr>
+  <tr><td>Echelon structure (Role 1→4), triage categories</td><td>FM 4-02; JP 4-02</td><td>Queue topology and priority discipline.</td></tr>
+</table>
+<h4><span class="tagB">Estimated from observed data</span></h4>
+<table>
+  <tr><th>Parameter</th><th>Value (source)</th><th>Quality</th></tr>
+  <tr><td>Service time $1/\mu$ by injury severity</td><td>94–206 min mean by ISS band, heavy right tail (Hall 2023, DoD Trauma Registry) <sup class="cite"><a onclick="return goCite('r-hall')" href="#r-hall">Hall'23</a></sup></td><td><b>Best.</b> Definitive-care time, an upper bound on forward damage-control.</td></tr>
+  <tr><td>Casualty arrival rate $\lambda$</td><td><b>Doctrinal low-intensity anchor: ATP 4-02.55 Table D-4h</b> (Korea, lower-intensity offensive), WIA ≈ <b>3.54/1,000/day</b> <sup class="cite"><a onclick="return goCite('r-atp40255')" href="#r-atp40255">ATP&nbsp;4-02.55</a></sup>. Field calibration: battalion ~9.5%/day, division ~1%/day (Jones) <sup class="cite"><a onclick="return goCite('r-jones')" href="#r-jones">Jones'19</a></sup></td><td><b>Good</b>: doctrine plus official Army statistics.</td></tr>
+  <tr><td>Arrival burstiness</td><td>83 casualties/hr peak, 673/24 h at one node (Oct-7 2023) <sup class="cite"><a onclick="return goCite('r-bah')" href="#r-bah">Bahouth'24</a></sup>; heavy-tailed/multifractal (Lauren) <sup class="cite"><a onclick="return goCite('r-lauren')" href="#r-lauren">Lauren'03</a></sup></td><td>Good: a measured pulse, so $\lambda(t)$ is time-varying.</td></tr>
+  <tr><td>Survival/abandonment clock $\theta(t)$ by severity</td><td><b>TML+ dynamic mortality curves</b> (NHRC 04-31): probability of death vs time-to-treatment <sup class="cite"><a onclick="return goCite('r-tml')" href="#r-tml">TML+</a></sup>. Golden-hour evidence (Kotwal: surgery &lt;1 h cut mortality 40%)</td><td>Moderate→good: a doctrinal hazard.</td></tr>
+  <tr><td>DOW baseline (validation target)</td><td>Post-9/11: 12.7% of deaths after reaching an MTF, 87.3% prehospital (Eastridge) <sup class="cite"><a onclick="return goCite('r-east')" href="#r-east">Eastridge'12</a></sup>. Battlefield survivability 90% (vs 84% Vietnam, 80% WWII).</td><td><b>Best</b> baseline; the LSCO target is the gap (see limitation).</td></tr>
+  <tr><td>Evac delay (the lever, observed)</td><td>Contested (Ukraine): hours–days; 24 h at POI, 48 h on the battlefield <sup class="cite"><a onclick="return goCite('r-lawry')" href="#r-lawry">Lawry'25</a></sup>. Uncontested (Gaza): &lt;70 min, CFR 6.7% <sup class="cite"><a onclick="return goCite('r-katz')" href="#r-katz">Katzman'25</a></sup></td><td>Good: the two boundary cases bracket the curve.</td></tr>
+</table>
+<div class="flag"><b>Why the threshold is not tautological.</b> $\lambda^{*}=s\mu$ moves only if a doctrinal number or an observed number changes; no analyst preference sits on that path. The DOW curve above the threshold is a theorem of the overload limit. Two prior studies lacked this property: Apache, whose driving parameter was a free analyst knob, and the blockade question, where the measurable proxy never pinned the estimand.</div>
+
+<h3>Work plan</h3>
+<table>
+  <tr><th>Phase</th><th>Action</th><th>Status</th></tr>
+  <tr><td>0</td><td>Question scoping, prior-art gate, literature sweep and PDF library</td><td><span class="pill done">done</span></td></tr>
+  <tr><td>1</td><td><b>Calibration table</b>: doctrinal $s,\mu,T$ from ATP/FM 4-02; $\lambda$, service time, survival clock, DOW from the empirical set: each cell with a source and a quality flag</td><td><span class="pill done">done</span></td></tr>
+  <tr><td>2</td><td><b>Test H1</b>: compute $s\mu$ for a doctrinal node, compare to $\lambda_{\text{obs}}$: the go/no-go for the thesis</td><td><span class="pill done">done</span></td></tr>
+  <tr><td>3</td><td><b>Derive</b> $\lambda^{*}$, the DOW elbow, and $\partial\,\text{DOW}/\partial T$ from the committed engine (<code>estimand.js</code>); the $M/G/c+G$ simulation is the working core, Erlang-A the closed-form skeleton</td><td><span class="pill done">done</span></td></tr>
+  <tr><td>4</td><td><b>Validate</b> against the Gaza/Ukraine brackets (direction reproduced); Tier-C robustness via the 40k-row sweep</td><td><span class="pill done">done</span></td></tr>
+  <tr><td>5</td><td><b>Write and submit</b> (<i>Military Operations Research</i>)</td><td><span class="pill prog">drafting</span></td></tr>
+</table>

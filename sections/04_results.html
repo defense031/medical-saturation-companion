@@ -1,0 +1,125 @@
+<h2>4 · Results</h2>
+<p>The casualty surge overruns the forward surgical team while the daily average stays inside its margin. The strongest lever on who lives is how fast the wounded reach the table. Transport limits outcomes in two separate ways: the wounded reach surgery only as fast as the threat allows, and they leave theater only as fast as the lift allows. Each limit takes its own fix.</p>
+<p>Two findings rest on measured data: the surge and the evacuation timeline. The rest follow from how any finite-server queue with a survival clock behaves, so they frame the decision and do not stand as evidence about this war; the headers mark which is which. Two independent re-runs of the engines reproduced every number below.</p>
+
+<h3>Findings grounded in data</h3>
+
+<h4>1 · The surge saturates the team below capacity <span class="pill done">data-forced</span></h4>
+<p>Doctrine sizes the forward surgical node to an average casualty rate: ATP 4-02.55's lower-intensity offensive rate (Korea), WIA ≈ 3.54 per 1,000 per day<sup class="cite"><a onclick="return goCite('r-atp40255')" href="#r-atp40255">ATP&nbsp;4-02.55</a></sup>, against a node rated for ~10 cases in 24 h<sup class="cite"><a onclick="return goCite('r-atp40225')" href="#r-atp40225">ATP&nbsp;4-02.25</a></sup>. On that arithmetic the node copes. The arithmetic is wrong, because casualties arrive in pulses, and the pulse is measured: 83 casualties in one hour at a single facility on 7 October<sup class="cite"><a onclick="return goCite('r-bah')" href="#r-bah">Soroka'24</a></sup>, against two tables clearing about one surgical case an hour. Hold the daily load fixed and change only the arrival pattern:</p>
+<table>
+  <tr><th>Rate regime</th><th>$\lambda$ /day</th><th>$\rho$</th><th>steady DOW</th><th>batch $\sigma{=}1.0$</th><th>batch $\sigma{=}1.4$</th></tr>
+  <tr><td>Korea, lower-intensity offensive</td><td>15.9</td><td>0.21</td><td>1.6%</td><td>23.1%</td><td>36.5%</td></tr>
+  <tr><td>WWII-Europe offensive</td><td>43.8</td><td>0.59</td><td>10.4%</td><td>31.1%</td><td>42.3%</td></tr>
+  <tr><td>WWII-Italy offensive</td><td>70.2</td><td>0.94</td><td>22.0%</td><td>38.3%</td><td>47.4%</td></tr>
+</table>
+<p class="note">$\rho$ is load against surge table-capacity ($c\mu\approx$ 21 cases/day). Each row holds $\rho$ fixed and changes only the arrival pattern, so the steady-versus-pulse gap stands whatever the daily-average level turns out to be.</p>
+<p><b>At the Korea rate the node runs at 21% of capacity, yet pulsed arrivals kill 23% against 1.6% for the same daily load arriving steadily.</b> A mass-casualty event delivers a day of surgery in an afternoon, and at 135 minutes a case two tables cannot keep up; the deaths come from arrivals exceeding throughput during the pulse. The pulse and the throughput are both measured numbers, while the death fraction's level tracks the survival clock, which we sweep. <b>So what:</b> the doctrinal rule sizes capacity against the mean rate, and the binding planning quantity is the surge.</p>
+
+<h4>2 · Evacuation time sets the surgical death rate <span class="pill done">data-grounded</span></h4>
+<p>The evidence is a <b>natural experiment</b>: two wars whose wounds were comparable but whose evacuation times diverged, so the gap in outcomes reads straight off that one difference. With evacuation under 70 minutes and whole blood forward, Gaza held case-fatality at 6.7%<sup class="cite"><a onclick="return goCite('r-katz')" href="#r-katz">Katzman'25</a></sup>; with a contested forward zone forcing holds of hours to days, Ukrainian casualties die before a surgeon sees them<sup class="cite"><a onclick="return goCite('r-lawry')" href="#r-lawry">Lawry'25</a></sup>. Eastridge fixes the scale of that window: 87% of combat deaths occur before the hospital<sup class="cite"><a onclick="return goCite('r-east')" href="#r-east">Eastridge'12</a></sup>, and the golden-hour evidence makes it causal, with evacuation inside the hour cutting mortality sharply<sup class="cite"><a onclick="return goCite('r-tml')" href="#r-tml">Kotwal</a></sup>. The model carries this forward: as the rotary air-evacuation fraction falls (the forward MEDEVAC lane, distinct from theater air control), total mortality rises and the dying shifts off the table and onto the road.</p>
+<table>
+  <tr><th>Rotary air-evac fraction</th><th>prehospital</th><th>total mortality</th><th>where death falls (pre : at-node)</th></tr>
+  <tr><td>95% (sky owned)</td><td>18.8%</td><td>42.0%</td><td>45 / 55</td></tr>
+  <tr><td>60%</td><td>40.2%</td><td>52.9%</td><td>76 / 24</td></tr>
+  <tr><td>20% (contested)</td><td>64.4%</td><td>68.8%</td><td>94 / 6</td></tr>
+</table>
+<p class="note">The model scores access (death in transit or in the queue) and credits a save at table contact, leaving clinical survival on the table to the trauma literature. The <i>where death falls</i> split, prehospital versus at-the-node as shares of total mortality, is the comparison that holds across runs; the finding is the shift in that split.</p>
+<p>The forward shift is monotone across every parameter we vary, and its level holds given the hours-to-days ground evacuation a contested forward zone imposes. This is the first of two transport bottlenecks, the threat-limited one: the leg from point of injury to the surgical node, degraded by contested air. More helicopters cannot resource around it, because rotary lift is what the enemy shoots first, so the levers that still work are the ones that need no air or ground route (prolonged field care, blood pushed forward; Finding 3). <b>So what:</b> evacuation time is a surgical-outcome variable, so air superiority over the forward fight belongs inside the medical estimate, and the casualty forecast turns on more than wound severity.</p>
+
+<h3>The threshold and the curve, computed</h3>
+<p>Three quantities pin Findings 1 and 2 to exact numbers, all computed from the committed engine (<code>calibration/estimand.js</code>): the saturation threshold $\lambda^{*}$, the overload curve $\text{DOW}(\lambda)$, and the evacuation-timeline sensitivity $\partial\,\text{DOW}/\partial T$. The first two fix where Finding 1's saturation begins; the slope turns Finding 2's natural experiment into a function of delay.</p>
+
+<h4>The threshold $\lambda^{*}=s\mu$</h4>
+<p>For the FRSD (two tables, 135 min a case) sustained surgical throughput is $s\mu = 2\times(1440/135) \approx 21$ operative cases per day at continuous run. In all-WIA terms, at the presenter operative fraction (0.286), the node crosses $\rho=1$ near <b>75 WIA per day</b>, just above the WWII-Italy-offensive rate (15.6 per 1,000 × a 4,500-soldier catchment, $\rho\approx0.94$). The doctrinal node sits just below the threshold at the most intense historical offensive rate: wide margin at the Korea rate ($\rho\approx0.21$), all but critically loaded at the hardest offensive rate.</p>
+
+<h4>The elbow $\text{DOW}(\lambda)$ <span class="pill done">H2</span></h4>
+<p>Sweeping the load through the threshold gives the curve, which tracks the fluid overload law $\left(1-s\mu/\lambda\right)^{+}$ above $\rho=1$:</p>
+<table>
+  <tr><th>all-WIA $\lambda$ /day</th><th>$\rho$</th><th>DOW</th><th>fluid law $(1-s\mu/\lambda)^{+}$</th></tr>
+  <tr><td>16 (Korea)</td><td>0.21</td><td>1.6%</td><td>0</td></tr>
+  <tr><td>44 (Europe off.)</td><td>0.59</td><td>10%</td><td>0</td></tr>
+  <tr><td>70 (Italy off.)</td><td>0.94</td><td>22%</td><td>0</td></tr>
+  <tr><td>75</td><td>1.00</td><td>24%</td><td>0</td></tr>
+  <tr><td>90</td><td>1.21</td><td>30%</td><td>17%</td></tr>
+  <tr><td>160</td><td>2.14</td><td>55%</td><td>53%</td></tr>
+</table>
+<p class="note">The threshold holds at $\lambda^{*}=s\mu$, and the fluid law is the <i>above</i>-threshold asymptote the simulation converges to by $\rho\approx2$. The transition is a <b>soft</b> elbow: a short survival clock makes abandonment nonzero below threshold, with casualties reneging while waiting even at $\rho<1$, so saturation <i>begins before</i> $\rho=1$. That below-threshold reneging is itself a finding (a small-server queue against a short clock loses double digits at moderate load), and it leaves H2 right in location but gentler in shape than $\left(1-s\mu/\lambda\right)^{+}$ alone.</p>
+
+<h4>The evacuation-timeline slope $\partial\,\text{DOW}/\partial T$ <span class="pill done">H4</span></h4>
+<p>Holding the hard LSCO load fixed and varying only $T$, the time from wounding to surgery, gives a positive, steep slope, steepest in the first hour: the model produces the golden hour rather than assuming it.</p>
+<table>
+  <tr><th>$T$ to surgery</th><th>total mortality</th><th>where it falls (pre : node)</th><th>marginal $\partial\,\text{DOW}/\partial T$</th></tr>
+  <tr><td>45 min</td><td>40%</td><td>39 / 61</td><td>–</td></tr>
+  <tr><td>60 min &nbsp;<span class="note">(Gaza)</span></td><td>44%</td><td>54 / 46</td><td>~16 pt / h</td></tr>
+  <tr><td>120 min</td><td>59%</td><td>85 / 15</td><td>~14 pt / h</td></tr>
+  <tr><td>240 min</td><td>78%</td><td>98 / 2</td><td>~8 pt / h</td></tr>
+  <tr><td>720 min &nbsp;<span class="note">(Ukraine)</span></td><td>97%</td><td>100 / 0</td><td>~1 pt / h</td></tr>
+</table>
+<p class="note">The first added hour of delay costs ~16 mortality points, the eighth almost nothing, because by then everyone who will die in transit has. The golden hour is the interval where $\partial\,\text{DOW}/\partial T$ is steepest. <b>Validation:</b> the Gaza (fast to surgery) and Ukraine (hours-to-days) endpoints bracket the curve in the direction the natural experiment demands, fast copes and slow does not, falsifying the null $\partial\,\text{DOW}/\partial T\approx0$. The absolute levels ride the swept survival clock; the steep monotone rise and the bracket ordering are what we claim.</p>
+<p>This slope <i>is</i> the air-superiority finding (Finding 2) in another coordinate: rotary-evacuation viability sets $T$, so the timeline sensitivity and the headline data finding are one mechanism ($T=45$ min reproduces the sky-owned 40% floor of the envelope). And the timeline here is the <b>forward</b> one, time-to-surgery, which the Gaza/Ukraine bracket tests. The doctrinal <b>rear</b> "days held before onward evacuation" is a separate effect, the back-pressure of Finding 4 below, which the model exposes as structure rather than confirms as a tested hypothesis.</p>
+
+<h3>Structure the model exposes</h3>
+<p class="note">These follow from the two findings above and the shape of any finite-server queue with a survival clock. They organize the resourcing decision; treat them as structure.</p>
+
+<h4>3 · The best lever depends on the air picture</h4>
+<p>As the forward air picture changes, death moves between the node and the road, and the lever that helps moves with it. With the sky owned, the node is the bottleneck and surgical capacity buys the most; as air is lost, the levers that buy the casualty time take over, led by prolonged field care.</p>
+<table>
+  <tr><th>Intervention (Δ total mortality)</th><th>air 20%</th><th>air 60%</th><th>air 90%</th></tr>
+  <tr><td>Prolonged field care (survival span ×2)</td><td>−18.6</td><td>−14.8</td><td>−13.0</td></tr>
+  <tr><td>More tables (c: 2→4)</td><td>−3.4</td><td>−9.2</td><td>−14.2</td></tr>
+  <tr><td>Faster surgery ($\mu$: 135→90)</td><td>−1.3</td><td>−3.6</td><td>−5.7</td></tr>
+</table>
+<p>The logic follows from the first two findings; the crossover location is the model's output. <b>So what:</b> the procurement answer, tables or time, is conditional on whether the force will own the air, so the medical force design depends on stating that assumption.</p>
+<p>One caution the table hides: prolonged field care enters the model as a dial, double the survival span and read off the −18.6 points. The field charges for that dial. Holding a casualty 72 hours forward takes trained teams, sustained labor, and Class VIII (blood, oxygen, analgesia, consumables) at the casualty collection point and Role 1, echelons that today carry neither the supplies nor the training to do it; the Role 2 has a limited patient-hold capability. The model says forward holding is the highest-value lever as air is lost, and it leaves open which of training, manning, Class VIII, and policy is the binding shortfall. That shortfall is what the −18.6 points actually cost.</p>
+<p>Forward whole blood sits just outside this scope: pushing resuscitation toward the point of injury would buy survival time on the body even where surgical teams cannot be distributed. Its precise effect on the survival clock is not pinned, so the model leaves it as a future extension rather than scoring it here.</p>
+
+<h4>4 · A throughput-limited strategic evacuation can stall the forward node <span class="note">(the second axis)</span></h4>
+<p>The forward node's death rate holds flat until strategic lift crosses ~92% utilization, then it jumps. The rear bottleneck is the lift: Madigan, Walter Reed, and BAMC flex and offload to civilian trauma systems, so definitive-care beds have room. What binds is moving litter patients <i>out of theater</i> by strategic aeromedical evacuation, a fleet of litter-configured cargo aircraft and the crews that provide care en route, throughput-limited and flown from rear airfields that near-peer long-range fires could still reach (a scope boundary we return to). When it cannot clear the theater fast enough, stabilized patients cannot leave the forward node's holding, a finished surgical case cannot vacate the table, and the tables block while surgeons idle. This is the generic behavior of a tandem queue whose downstream stage saturates, and it appears as a cliff.</p>
+<table>
+  <tr><th>Strategic-evac lift</th><th>prehospital</th><th>forward node</th><th>total mortality</th><th>node Δ from blocking</th></tr>
+  <tr><td>Ample (clears the theater)</td><td>40.1%</td><td>21.4%</td><td>52.9%</td><td>–</td></tr>
+  <tr><td>Saturated (theater cut off)</td><td>40.1%</td><td>26.9%</td><td>56.2%</td><td>+5.5 pt</td></tr>
+</table>
+<p class="note">Adding one strategic-evac slot cuts node death about five points; doubling the forward holding (8→16 beds) cuts it about two. The back-pressure increment is forward-node death the rear pipeline causes, a third place to die on the second axis, and the wounded back up faster than buffer can absorb, so the fix is airframes. The squeeze <i>eases</i> as forward air is lost, because fewer wounded survive transit to need a flight out, so the two transport axes are substitutes: the rear pipeline binds hardest exactly when the forward fight goes well.</p>
+<p><b>So what:</b> when forward evacuation succeeds, the volume of survivors overwhelms an under-resourced strategic evacuation, so the rear-evacuation fleet is part of the Army surgical node's effective capacity. This is a procurement problem, and it spans airframes plus the crewed en-route care (critical-care air transport teams) and the patient-regulation pipeline, which in a real theater bind as often as the aircraft count. The capacity numbers and the cliff's exact location track the buffer size and stay illustrative; what holds is the mechanism, and that the relief is downstream lift.</p>
+
+<h4>5 · Triage precedence is a second-order lever, and the obvious rule backfires</h4>
+<p>Triage at both choke points (who gets the next free table, who gets the fast rotary lane) moves total operative mortality only 1 to 2 points, and on the air slot the intuitive rule runs the wrong way. A precedence engine (<code>calibration/triage_test.js</code>, validated to reproduce the baseline air sweep) sets the precedence and measures what it buys, against a baseline that serves first-in-first-out and routes the air slot at random.</p>
+<table>
+  <tr><th>Rotary air-evac</th><th>table: earliest-deadline vs FIFO</th><th>air: most-urgent first</th><th>air: salvageable first</th></tr>
+  <tr><td>95% (sky owned)</td><td>−1.4</td><td>+0.3</td><td>+0.1</td></tr>
+  <tr><td>60%</td><td>−1.0</td><td>+0.7</td><td>−1.7</td></tr>
+  <tr><td>20% (contested)</td><td>−0.4</td><td>+1.0</td><td>−1.4</td></tr>
+</table>
+<p class="note">Δ total operative mortality, points; negative helps. <b>Table precedence</b>, serving the casualty nearest his deadline, buys up to about 1.5 points, most when the sky is owned and the node queue is the long one. <b>Air precedence carries a trap:</b> routing the fast slot to the <i>most urgent</i> casualty beats random at no air level, because the shortest-clock casualties are disproportionately the ones a fast evacuation cannot save, so scarce lift goes to the dying while the salvageable take the road. Routing it to the <i>salvageable</i> instead, those a fast evac saves and a slow one loses, helps ~1.5 points, most in the middle of the air range where slots are scarce but not vanishing.</p>
+<p><b>So what:</b> triage of scarce evacuation is worth setting at a combined best near 2 to 2.5 points, well below prolonged field care or forward blood, and the doctrinally intuitive "sickest first" routing of aircraft is counterproductive. The rule ordering and the directions are the finding; the levels ride the swept survival clock. This is the impatient-jobs clearing model the <a href="#" onclick="showPanel('methods');return false">Methods</a> tab formalizes, now run in a committed simulation.</p>
+
+<h3>Tested, but not yet a claim</h3>
+<h4>Hardening a single evacuation route</h4>
+<p>Speeding one ground corridor and then losing it to interdiction can leave the force worse off than the slow road it started with. The direction holds, but it rests on an adversary-response multiplier we impose rather than measure, so take it as a caution and not a result: concentrating flow on an interdictable asset is fragile. Route redundancy is the doctrinal hedge.</p>
+
+<h3>What sets the levels</h3>
+<p>The orderings above hold across the sweep; four inputs set their scale, and we report each as swept rather than pinned to a single value:</p>
+<ul>
+  <li>The survival-from-wounding clock is the largest unknown, since no measured untreated-survival curve exists for the operative population, and the death levels move most with it. The directions hold as it varies.</li>
+  <li>Whether the daily-average load exceeds capacity depends on the fraction of wounded who present to the node, which open doctrine does not give. The burst and evacuation findings hold regardless, because neither rests on that fraction.</li>
+  <li>The model scores who reaches surgery in time, so it speaks to access (death in transit or in line) and leaves clinical survival, the patient who reaches the table and dies anyway, to the trauma literature.</li>
+  <li>Operative need, the survival clock, and surgery duration are drawn independently, where in reality the worst-wounded are at once the most likely to need surgery, the quickest to die, and the longest on the table. Coupling them raises the death fraction, so the reported levels stay conservative and the orderings do not depend on it.</li>
+</ul>
+
+<h3>The envelope: best day, worst day</h3>
+<p>The findings above each move within a range the dataset measures, and read as corners they bound the outcome: a good day, when the sky is owned and casualties trickle in, against a bad day, when air is contested, the wounds are fast, and the pulse lands all at once. Each row holds everything else fixed and swings one parameter across its committed grid, so the rows have different baselines and each reports the swing in the right column (24 seeds per cell, max SEM 0.16&nbsp;pt).</p>
+<table>
+  <tr><th>Parameter (axis)</th><th>best-day corner</th><th>worst-day corner</th><th>mortality swing</th></tr>
+  <tr><td>Air superiority, forward (E5)</td><td>sky owned: 40.3%</td><td>contested: 78.5%</td><td>+38 pt</td></tr>
+  <tr><td>Arrival pattern at fixed load, forward (E1)</td><td>steady: 1.6%</td><td>pulsed $\sigma{=}1.4$: 36.5%</td><td>+35 pt</td></tr>
+  <tr><td>Surgery duration $\mu$, forward (E3)</td><td>135&nbsp;min: 31.1%</td><td>200&nbsp;min: 41.0%</td><td>+10 pt</td></tr>
+  <tr><td>Survival clock, sets both axes (E6)</td><td>long span: 38.1%</td><td>short span: 72.1%</td><td>+34 pt</td></tr>
+  <tr><td>Strategic-evac lift, rear (E8)</td><td>ample: node 28.4%</td><td>cut off: node 42.1%</td><td>+14 pt*</td></tr>
+</table>
+<p class="note">*The rear corner is a node-death increment with the sky owned, on a different axis and denominator from the forward corners, and (see below) it stays off the forward total. Arrival pattern (E1) holds load fixed and varies only the pulse, so its swing is denominator-invariant; the air, $\mu$, clock, and lift swings ride the survival clock, which we sweep, so the directions are anchored and the levels swept.</p>
+<p>The operative-mortality envelope runs from roughly <b>40% on a good day to the high 70s on a bad one</b>. The good day is the air corner with the sky owned (40%), already a sobering floor: even with golden-hour evacuation, the LSCO wound mix and the pulse kill two in five who reach surgical consideration. The bad day is contested air (79%), where most of the dying has moved off the table and onto the road. The clock and the burst slide the whole band up or down inside that range.</p>
+<p>One stacking rule the data enforces: <b>do not add the worst forward corner to the worst rear corner.</b> The two transport axes are substitutes. The rear back-pressure penalty is +14 points when the sky is owned and falls to +0.2 points when air is contested, because losing forward air kills the wounded in transit, so fewer survive to saturate strategic evacuation. The rear pipeline binds hardest on the good forward day, and on the bad forward day it is already empty. The worst single number the model produces is therefore the contested-air forward corner alone, with the rear penalty correctly near zero; adding the cut-rear corner on top would double-count. The envelope is a band you slide along two axes.</p>
+
+<h3>What this means for force design</h3>
+<p>Size the forward node for the pulse: the binding number is the surge, and the mean-rate planning factor understates it by an order of magnitude. Then treat transport as two distinct bottlenecks, because they fail for opposite reasons and take opposite fixes. The forward leg, point of injury to the table, is <b>threat-limited</b>: contested air kills the wounded in transit, and aircraft the enemy destroys first cannot buy a way out, so the levers that still work are the ones that need no air or ground route (blood and prolonged field care pushed forward), and their real cost is training and Class VIII at echelons that lack both. The rear leg, node to definitive care out of theater, is <b>capacity-limited</b>: the CONUS hospitals flex, but the Air Force aeromedical-evacuation fleet that feeds them is too small, and it binds hardest when forward evacuation is succeeding. That leg is a procurement problem solved with airframes. The medical force design turns on naming which fight, forward or rear, the force expects to come up short in.</p>

@@ -1,0 +1,56 @@
+<h2>5 · Discussion, Limitations &amp; So-What</h2>
+
+<h3>The takeaway for leaders</h3>
+<div class="card crux">
+  <div class="note" style="text-transform:uppercase;letter-spacing:.5px;font-weight:700;color:var(--accent)">Bottom line</div>
+  <div class="q">The forward surgical node is sized to the peer <i>planning</i> casualty rate. The intense phase of a great-power war overruns it inside the engagement pulse, and past that point the queue kills a share of the dead the wound would have spared.</div>
+  <p>That preventable share is the only thing resourcing can buy back, and the bed counts the force reports never show it. Five calls fall out of that:</p>
+  <ul>
+    <li><b>Grow throughput.</b> Operating-table-hours bind first, set by surgical teams. The capacity target is throughput that meets the engagement-pulse arrival; the daily average understates it, and a bed count measures the wrong thing.</li>
+    <li><b>The decision number is deaths per added holding-day,</b> $\partial\,\text{DOW}/\partial T$, a slope. It says exactly what a longer evacuation policy costs in lives.</li>
+    <li><b>Transport is two bottlenecks that take opposite fixes.</b> The forward leg, point of injury to the table, is threat-limited: contested air kills the wounded in transit, and aircraft the enemy destroys first cannot buy you out of it. The rear leg, node to definitive care out of theater, is capacity-limited: the CONUS hospitals flex, but the Air Force strategic-evacuation fleet that feeds them is too small. Forward you change tactics and push capability onto the body; rear you buy airframes. Naming which one the force expects to come up short in is the design choice.</li>
+    <li><b>Prolonged field care is the highest-value forward lever, and it is a bill.</b> As air is lost, buying the casualty time outranks a surgical table he cannot reach in time. Holding a casualty forward for days takes trained teams, manning, and Class VIII at the collection point and Role 1, which carry neither today; the Role 2 hold is limited. The model prices the value, and the decision is which of training, manning, supply, and policy is the binding shortfall.</li>
+    <li><b>Force structure is a bet on the casualty-rate regime.</b> Build to the planning rate and the assault phase produces preventable death; build to the offensive rate and most of the capacity sits idle in sustainment. The model prices both sides of that bet.</li>
+  </ul>
+</div>
+
+<h3>The tipping point: what holds, what moves it</h3>
+<p>The tipping point's <b>location is fixed and checkable</b> ($\lambda^{*}=s\mu$, doctrine-pinned, the go/no-go inequality). The unobservable inputs move its <b>steepness</b>, not where it sits. Each perturbation below acts on one of those two, and none of them moves the threshold.</p>
+<table>
+  <tr><th>Perturbation (Δ)</th><th>Effect on the tipping point</th></tr>
+  <tr><td><b>A</b>: service-time distribution shape (variance, tails)</td><td>Location $\lambda^{*}=s\mu$ <b>holds</b>; mild effect on steepness. (The Whitt insensitivity result: the sim shows $M/D/G$ nearly coincide above the elbow.)</td></tr>
+  <tr><td><b>B</b>: survival-time (patience) distribution shape</td><td>Location <b>holds</b>; moves steepness and level.</td></tr>
+  <tr><td><b>C</b>: unobservable contested-rear baseline DOW rate</td><td>Location <b>holds</b> (it is capacity versus arrivals); sets the level of the curve above the elbow. The one number we cannot see touches only the part that is already a sensitivity sweep.</td></tr>
+  <tr><td><b>¬X</b>: the strategic pipeline binds before tables</td><td><b>Shifts the binding constraint downstream.</b> When strategic-evac lift saturates, clearing capacity out of theater sets the threshold, and the lever shifts to airframes (the second axis).</td></tr>
+  <tr><td><b>¬Y</b>: most DOW is wound-fatal regardless of timing</td><td><b>Shrinks the prize.</b> The controllable (capacity-limited) slice is small; the model still locates the elbow, but the decision payoff falls.</td></tr>
+  <tr><td><b>¬Z dynamic</b>: μ falls under load (fatigue, blood-out)</td><td><b>Bends the frame.</b> Capacity is endogenous, $\lambda^{*}$ drifts left as the battle wears on, and resupply and rotation become a first-order lever.</td></tr>
+</table>
+
+<h3>Sensitivity across the two transport axes</h3>
+<p>Transport fails for <b>two opposite reasons</b>, and the medical estimate has to size against the right one. Lump them as a single "contested rear" and both the mechanism and the fix disappear.</p>
+<p><b>Axis 1: the forward fight gets more contested (threat-limited).</b> The contested zone is forward: the leg from point of injury to the node, and the node's own supply lines. A worsening forward fight fans into three paths, and all three push death the same way.</p>
+<table>
+  <tr><th>Path</th><th>Trace</th><th>Effect</th></tr>
+  <tr><td><b>1: tactical evac degraded</b></td><td>contested air → casualty evacuation (POI→node) slows → survival clock runs out in transit → prehospital death.</td><td>Raises total mortality and shifts the dying forward, off the table and onto the road (the air-superiority sweep). Bought back only by levers that ride no contested lane.</td></tr>
+  <tr><td><b>2: forward resupply interdicted</b></td><td>blood (VIIIB) and materiel (VIIIA) to the node interdicted → damage-control resuscitation is blood-limited (ATP 4-02.25 ¶1-11)<sup class="cite"><a onclick="return goCite('r-atp40225')" href="#r-atp40225">ATP&nbsp;4-02.25</a></sup> → $\mu$ ↓.</td><td><b>Moves $\lambda^{*}$ left.</b> Holding longer does not touch it; the same fight that slows evac starves the blood that holding requires.</td></tr>
+  <tr><td><b>3: forced displacement</b></td><td>node disperses/displaces to survive → produces zero while moving (ATP 4-02.25 Ch 4) → time-averaged $\mu$ ↓.</td><td><b>Moves $\lambda^{*}$ left</b> and makes $\mu$ time-varying: capacity decays as the battle wears on (the ¬Z-dynamic regime).</td></tr>
+</table>
+<p>These three compound, worsening together as the forward fight does, and more aircraft buy back none of them, because the aircraft are what the enemy destroys first. What works puts the capability where the enemy cannot reach it: prolonged field care and blood on the body, dispersion to lower each node's exposure.</p>
+<p><b>Axis 2: the strategic pipeline saturates (capacity-limited).</b> Out of theater the definitive-care hospitals flex, and the aeromedical-evacuation flights run from rear airfields. What binds is the strategic evacuation fleet: too few litter-configured aircraft, and as often too few critical-care air-transport crews and too little patient-regulation throughput to move the stabilized outflow. When strategic lift cannot clear the theater, holding fills and the forward tables block from behind, the back-pressure cliff. Capacity drives this axis, and it bites hardest when forward evacuation is succeeding and survivors are plentiful. Procurement relieves it, by adding airframes and crews; tactics do not.</p>
+<div class="frame"><b>Scope boundary.</b> We model the rear as capacity-limited. A near-peer whose long-range fires range the aerial ports of embarkation and the en-route hubs turns part of the rear into a threat problem too, and the two axes collapse back toward each other. That is the case where the split here breaks, and it is a different model; we hold it aside as a separate study. The capacity-limited rear is the base case.</div>
+<div class="frame">
+  <b>Read-off.</b> The two axes are <b>substitutes</b>: they do not add their worst cases. Lose the forward air and casualties die in transit, so fewer survive to need a flight out; the rear pipeline binds hardest exactly when the forward fight goes well. The contested-forward case and the saturated-strategic-evac case are different fights with different fixes. Forward is threat-limited and answered by capability pushed onto the body (PFC, blood) and dispersion; rear is capacity-limited and answered by procurement (airframes, litter kits, port throughput). The medical estimate has to name which one it is sizing against.
+</div>
+<p class="note"><b>Three meanings of "contested," kept distinct.</b> The unobservable <i>clinical DOW baseline</i> (robustness row C) moves only the steepness of the curve, leaving the location safe. The <i>forward logistics contestation</i> traced here moves the location, through $\mu$. The <i>strategic-evac shortfall</i> is a downstream capacity that blocks the front from behind. Three different objects, one overloaded phrase.</p>
+<p class="note"><b>Where the closed form runs out.</b> Back-pressure (tables blocked by a saturated strategic pipeline), a capacity $\mu(t)$ that decays as the forward fight wears on, and bursty arrivals together have no closed form. The Erlang-A elbow is the static special case; once these enter, the working model is a finite-capacity abandonment-queue <i>simulation</i>.</p>
+
+<h3>Limitations</h3>
+<p>Three limits bound the result, with the full statement in the <a href="#" onclick="showPanel('plan');return false">Plan</a>. The DOW <i>magnitude</i> is a derived output that no published contested-rear clinical DOW rate validates, so we report it as a model output; the threshold $\lambda^{*}=s\mu$ does not depend on that unknown, and the headline holds regardless. The surgical fraction $f_{\text{surg}}$ is CUI, pinned from converging open anchors (≈0.10–0.12 of WIA, ≈0.20–0.34 of presenters), and the within-pulse saturation finding holds across that range. The second axis enters only as a throughput constraint on the forward node: strategic aeromedical evacuation is a downstream lift capacity that blocks or clears, modeled short of a fleet to be scheduled. Sizing and routing that fleet (how many airframes, on what cycle, to hold theater clearing under a given casualty stream) is the adjacent problem this work points to.</p>
+
+<h3>Where the result stands</h3>
+<ul>
+  <li>The <b>decision</b> is the same one throughout: minimize the preventable (capacity-limited) DOW slice, across the levers of capacity, positioning, evac policy, evac throughput, triage, and resupply.</li>
+  <li>Three <b>assumptions</b> carry it, each one named and falsifiable: X, tables bind; Y, DOW is waiting-dominated; Z, service is work-conserving and finite-mean.</li>
+  <li>The <b>threshold survives the unknowns.</b> Perturbations A, B, and C move the steepness of the curve; none moves its location at $\lambda^{*}=s\mu$.</li>
+  <li>The go/no-go inequality is now decidable and the estimand is in hand: $\lambda^{*}=s\mu$ (the FRSD crosses $\rho=1$ near the Italy-offensive rate), the DOW elbow (location at $\lambda^{*}$, softened below threshold by the survival clock), and the evacuation-timeline slope $\partial\,\text{DOW}/\partial T$ (~16 mortality points per added hour in the first hour, the golden hour emerging from the model), with the Gaza/Ukraine bracket reproducing its direction. Left to do: the $M/G/c+G$ refinements and a triage-precedence engine, on top of the core derivation already standing.</li>
+</ul>

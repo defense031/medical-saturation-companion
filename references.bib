@@ -1,0 +1,337 @@
+% ===================================================================
+% references.bib  —  Forward Surgical Saturation under LSCO
+% Companion to PLAN.html.  Every entry carries a `url` to verify the
+% document or doctrine.  Grouped: A doctrine | B methods | C empirical
+% | D adjacent (prior art).  PDFs on disk under papers/0X_*/.
+% Status tags in note{}: VERIFIED (downloaded this session) /
+% PAYWALL (open-access blocked, retrieve via browser) /
+% CONTROLLED (CUI/CAC-gated).
+% ===================================================================
+
+% ----------------------- A · DOCTRINE ------------------------------
+
+@manual{atp40225_frsd_2020,
+  title        = {{ATP 4-02.25: The Medical Detachment, Forward Resuscitative and Surgical (FRSD)}},
+  organization = {Headquarters, Department of the Army},
+  year         = {2020}, month = dec,
+  note         = {VERIFIED. Fixes mu: 2 operating tables, 135 min/case, 10 cases/24h, 30 cases/72h (Table 4-1, para 2-3)},
+  url          = {https://armypubs.army.mil/epubs/DR_pubs/DR_a/ARN37250-ATP_4-02.25-001-WEB-2.pdf}
+}
+
+@manual{atp4025_casualtycare_2013,
+  title        = {{ATP 4-02.5: Casualty Care}},
+  organization = {Headquarters, Department of the Army},
+  year         = {2013}, month = may,
+  note         = {VERIFIED. Role 2 patient-holding window up to 72 h},
+  url          = {https://armypubs.army.mil/epubs/DR_pubs/DR_a/ARN30121-ATP_4-02.5-001-WEB-3.pdf}
+}
+
+@manual{atp40255_planning_2020,
+  title        = {{ATP 4-02.55: Army Health System Support Planning}},
+  organization = {Headquarters, Department of the Army},
+  year         = {2020}, month = mar,
+  note         = {VERIFIED. Fixes admission rate lambda; Table D-4a (historical), Table D-4e Mideast peer approx 4.25/1000/day. Live FAS host bot-blocks scripts (opens in browser); Wayback mirror: https://web.archive.org/web/20240124204757id_/https://irp.fas.org/doddir/army/atp4-02-55.pdf},
+  url          = {https://irp.fas.org/doddir/army/atp4-02-55.pdf}
+}
+
+@manual{fm402_ahs_2013,
+  title        = {{FM 4-02: Army Health System}},
+  organization = {Headquarters, Department of the Army},
+  year         = {2013}, month = aug,
+  note         = {VERIFIED. Sec 8-5 fixes the theater evacuation policy lever (SecDef-set, in days; 7-day worked example)},
+  url          = {https://www.globalsecurity.org/military/library/policy/army/fm/4-02/fm4-02-2013.pdf}
+}
+
+@manual{jp402_jhs_2017,
+  title        = {{JP 4-02: Joint Health Services}},
+  organization = {Joint Chiefs of Staff},
+  year         = {2017}, month = dec,
+  note         = {VERIFIED. Joint restatement of theater evacuation policy; commander may recommend changes (supports modeling policy length as a lever)},
+  url          = {https://cdmrp.health.mil/pubs/pdf/Joint%20Health%20Services%20Publication%20JP%204-02.pdf}
+}
+
+@manual{atp4022_medevac_2019,
+  title        = {{ATP 4-02.2: Medical Evacuation}},
+  organization = {Headquarters, Department of the Army},
+  year         = {2019}, month = jul,
+  note         = {VERIFIED via Wayback (primary host rdl.train.army.mil unreachable to scripts). Inter-role transit/evacuation timelines},
+  url          = {https://web.archive.org/web/20240902224822id_/https://rdl.train.army.mil/catalog-ws/view/100.ATSC/56A63282-F1E1-488B-8817-C9E44E3FF4F2-1408535571708/atp4_02x2.pdf}
+}
+
+@techreport{mitchell_tmlplus_2004,
+  author       = {Mitchell, R. and Galarneau, M. and Hancock, B. and Lowe, D.},
+  title        = {{Modeling Dynamic Casualty Mortality Curves in the Tactical Medical Logistics (TML+) Planning Tool}},
+  institution  = {Naval Health Research Center}, number = {NHRC 04-31, DTIC ADA433701},
+  year         = {2004},
+  note         = {VERIFIED. Parameterizes the reneging hazard theta(t): time-dependent probability of death before treatment. (TML+ tool itself is CONTROLLED; this report documents the method.)},
+  url          = {https://archive.org/download/DTIC_ADA433701/DTIC_ADA433701.pdf}
+}
+
+@techreport{hobbs_caa_1984,
+  author       = {Hobbs, T. W. and Anthony, R. M. and Carras, A. N.},
+  title        = {{CAA Casualty Estimation Methodology (CAA-TP-84-4)}},
+  institution  = {U.S. Army Concepts Analysis Agency}, number = {DTIC ADA149644},
+  year         = {1984},
+  note         = {VERIFIED. Canonical Army methodology: casualty = rate x population over time; FASTALS, Patient Flow Model},
+  url          = {https://apps.dtic.mil/sti/tr/pdf/ADA149644.pdf}
+}
+
+@techreport{lauren_temporal_2003,
+  author       = {Lauren, M. K.},
+  title        = {{On the Temporal Distribution of Casualties and Determination of Medical Logistical Requirements}},
+  institution  = {Defence Technology Agency, New Zealand}, number = {DTA Report 187 (arXiv:1204.0050)},
+  year         = {2003},
+  note         = {VERIFIED. Multifractal/power-law-tailed casualty arrivals -> justifies bursty, non-Poisson lambda(t)},
+  url          = {https://arxiv.org/pdf/1204.0050}
+}
+
+@techreport{ahec_medcap_lsco,
+  author       = {Sheets, J. J. and others},
+  title        = {{Army Medical Capacity: Ready to Meet the LSCO Challenge?}},
+  institution  = {U.S. Army Heritage and Education Center / Army War College},
+  note         = {VERIFIED. Reduced forward footprint + contested evacuation strains capacity (motivation; the capacity squeeze)},
+  url          = {https://ahec.armywarcollege.edu/documents/Army_Medical_Capacity.pdf}
+}
+
+% Supporting doctrine/methodology on disk (papers/01_): ATTP 4-02 (2011),
+% Zouris NHRC 13-61 (DTIC ADA621488), Zouris-Blood NHRC 00-17 (ADA381878),
+% Knight CASEVAC SAMS (ADA403907). URLs in papers/01_/ANNOTATED_BIB.md.
+
+% ----------------------- B · METHODS -------------------------------
+
+@article{garnett2002_erlangA,
+  author  = {Garnett, O. and Mandelbaum, A. and Reiman, M. I.},
+  title   = {{Designing a Call Center with Impatient Customers}},
+  journal = {Manufacturing \& Service Operations Management}, volume = {4}, number = {3}, pages = {208--227}, year = {2002},
+  note    = {VERIFIED. The Erlang-A (M/M/n+M) model class: DOW = reneging => abandonment queue, not M/M/c},
+  url     = {https://aviman.technion.ac.il/files/References/Garnett.pdf}
+}
+
+@article{whitt2004_ed,
+  author  = {Whitt, W.},
+  title   = {{Efficiency-Driven Heavy-Traffic Approximations for Many-Server Queues with Abandonments}},
+  journal = {Management Science}, volume = {50}, number = {10}, pages = {1449--1461}, year = {2004},
+  note    = {VERIFIED. The overload (ED) regime: lambda* = s*mu; DOW approx 1 - s*mu/lambda. The algebraic spine},
+  url     = {http://www.columbia.edu/~ww2040/efficiencyCOR.pdf}
+}
+
+@article{whitt2006_fluid,
+  author  = {Whitt, W.},
+  title   = {{Fluid Models for Multiserver Queues with Abandonments}},
+  journal = {Operations Research}, volume = {54}, number = {1}, pages = {37--54}, year = {2006},
+  note    = {VERIFIED. Distribution-general overload limit (M/GI/s/r+GI). Defeats the "casualties aren't exponential" referee},
+  url     = {https://www.columbia.edu/~ww2040/fluid2006.pdf}
+}
+
+@article{whitt2006_sensitivity,
+  author  = {Whitt, W.},
+  title   = {{Sensitivity of Performance in the Erlang-A Queueing Model to Changes in the Model Parameters}},
+  journal = {Queueing Systems}, volume = {51}, number = {3--4}, pages = {233--257}, year = {2006},
+  note    = {VERIFIED. Elasticities powering the evacuation-policy (theta) sensitivity result},
+  url     = {http://www.columbia.edu/~ww2040/elasticity.pdf}
+}
+
+@article{zhang2012_fluid,
+  author  = {Zhang, J.},
+  title   = {{Fluid Models of Many-Server Queues with Abandonment}},
+  journal = {Queueing Systems}, volume = {72}, number = {1--2}, pages = {1--43}, year = {2012},
+  note    = {VERIFIED (arXiv:0909.1671). Rigorous G/GI/n+GI measure-valued fluid limit for general patience},
+  url     = {https://arxiv.org/pdf/0909.1671}
+}
+
+@article{vanleeuwaarden2019_qed,
+  author  = {van Leeuwaarden, J. S. H. and Mathijsen, B. W. J. and Zwart, B.},
+  title   = {{Economies-of-Scale in Many-Server Queueing Systems: Tutorial and Partial Review of the QED Halfin--Whitt Regime}},
+  journal = {SIAM Review}, volume = {61}, number = {3}, pages = {403--440}, year = {2019},
+  note    = {VERIFIED (arXiv:1706.05397). Open QED/Halfin-Whitt tutorial; the QD/QED/ED three-regime framing of lambda*},
+  url     = {https://arxiv.org/pdf/1706.05397}
+}
+
+@article{eick1993_physics,
+  author  = {Eick, S. G. and Massey, W. A. and Whitt, W.},
+  title   = {{The Physics of the Mt/G/infinity Queue}},
+  journal = {Operations Research}, volume = {41}, number = {4}, pages = {731--742}, year = {1993},
+  note    = {VERIFIED. Time-varying offered load (lag + smoothing) for battle-pulse arrivals},
+  url     = {https://www.columbia.edu/~ww2040/physics.pdf}
+}
+
+@article{green2007_timevarying,
+  author  = {Green, L. V. and Kolesar, P. J. and Whitt, W.},
+  title   = {{Coping with Time-Varying Demand When Setting Staffing Requirements for a Service System}},
+  journal = {Production and Operations Management}, volume = {16}, number = {1}, pages = {13--39}, year = {2007},
+  note    = {VERIFIED. MOL / PSA / SIPP recipe for nonstationary arrivals (which approximation the pulse warrants)},
+  url     = {https://www.columbia.edu/~ww2040/Green_Kolesar_Whitt.pdf}
+}
+
+@article{argon2008_clearing,
+  author  = {Argon, N. T. and Ziya, S. and Righter, R.},
+  title   = {{Scheduling Impatient Jobs in a Clearing System with Insights on Patient Triage in Mass Casualty Incidents}},
+  journal = {Probability in the Engineering and Informational Sciences}, volume = {22}, number = {3}, pages = {301--332}, year = {2008},
+  note    = {VERIFIED. Clearing model with lifetimes = survival windows; the batch (MASCAL/Q232) analogue and triage order},
+  url     = {https://ziya.web.unc.edu/wp-content/uploads/sites/15166/2018/02/Argon-Ziya-Righter-2008.pdf}
+}
+
+@article{mills2013_triage,
+  author  = {Mills, A. F. and Argon, N. T. and Ziya, S.},
+  title   = {{Resource-Based Patient Prioritization in Mass-Casualty Incidents}},
+  journal = {Manufacturing \& Service Operations Management}, volume = {15}, number = {3}, pages = {361--377}, year = {2013},
+  note    = {VERIFIED. Fluid triage with time-decaying survival; bridges abandonment queueing to triage doctrine},
+  url     = {https://ziya.web.unc.edu/wp-content/uploads/sites/15166/2018/02/Mills-Argon-Ziya-2013.pdf}
+}
+
+@incollection{green2006_healthcare,
+  author    = {Green, L. V.},
+  title     = {{Queueing Analysis in Health Care}},
+  booktitle = {Patient Flow: Reducing Delay in Healthcare Delivery}, publisher = {Springer}, pages = {281--307}, year = {2006},
+  note      = {VERIFIED. Servers-vs-beds distinction backing the table-hours-not-beds finding},
+  url       = {https://business.columbia.edu/sites/default/files-efs/pubfiles/4386/chapter%2011%20QueueingAnalysis.pdf}
+}
+
+@techreport{fomundam2007_survey,
+  author      = {Fomundam, S. and Herrmann, J. W.},
+  title       = {{A Survey of Queuing Theory Applications in Healthcare}},
+  institution = {Institute for Systems Research, Univ. of Maryland}, number = {ISR TR 2007-24}, year = {2007},
+  note        = {VERIFIED. Breadth citation situating the contribution in healthcare queueing},
+  url         = {https://drum.lib.umd.edu/bitstream/1903/7222/1/tr_2007-24.pdf}
+}
+
+@article{halfin1981_qed,
+  author  = {Halfin, S. and Whitt, W.},
+  title   = {{Heavy-Traffic Limits for Queues with Many Exponential Servers}},
+  journal = {Operations Research}, volume = {29}, number = {3}, pages = {567--588}, year = {1981},
+  note    = {PAYWALL (lineage anchor; covered by vanleeuwaarden2019_qed). DOI 10.1287/opre.29.3.567},
+  url     = {https://pubsonline.informs.org/doi/10.1287/opre.29.3.567}
+}
+
+@article{zeltyn2005_mmng,
+  author  = {Zeltyn, S. and Mandelbaum, A.},
+  title   = {{Call Centers with Impatient Customers: Many-Server Asymptotics of the M/M/n+G Queue}},
+  journal = {Queueing Systems}, volume = {51}, number = {3--4}, pages = {361--402}, year = {2005},
+  note    = {PAYWALL (general-patience Erlang-A; mitigated by zhang2012_fluid). DOI 10.1007/s11134-005-3699-8},
+  url     = {https://link.springer.com/article/10.1007/s11134-005-3699-8}
+}
+
+% Further methods on disk (papers/02_): Eick-Massey-Whitt sinusoidal (1993),
+% Virtamo loss-system notes, Davis-Massey-Whitt (1995), Sun-Argon-Ziya
+% (austere triage). See papers/02_/ANNOTATED_BIB.md.
+
+% ----------------------- C · EMPIRICAL CALIBRATION -----------------
+
+@article{hall2023_surgtime,
+  author  = {Hall, A. B. and Graham, B. and Hanson, B. and Stern, C.},
+  title   = {{Surgical Capability Utilization Time for Military Casualties at Role 2 and Role 3 Facilities}},
+  journal = {Military Medicine}, volume = {188}, number = {11-12}, pages = {e3368}, year = {2023},
+  note    = {PAYWALL (open full text on Oxford; PDF curl-blocked -> browser save). Empirical mu: operative time by ISS band, n=61,059. DOI 10.1093/milmed/usac414},
+  url     = {https://academic.oup.com/milmed/article/188/11-12/e3368/6961509}
+}
+
+@article{eastridge2012_dotb,
+  author  = {Eastridge, B. J. and Mabry, R. L. and Seguin, P. and others},
+  title   = {{Death on the Battlefield (2001--2011): Implications for the Future of Combat Casualty Care}},
+  journal = {Journal of Trauma and Acute Care Surgery}, volume = {73}, number = {6 Suppl 5}, pages = {S431--S437}, year = {2012},
+  note    = {VERIFIED. Post-9/11 DOW baseline: 4.6\% of deaths in-hospital, 87.3\% prehospital (n=4,596)},
+  url     = {https://www.east.org/content/documents/MilitaryResources/b/TCCC%20Eastridge%20Death%20on%20the%20Battlefield%20J%20Trauma%202012.pdf}
+}
+
+@article{remondelli2023_lsco,
+  author  = {Remondelli, M. H. and Remick, K. N. and Shackelford, S. A. and Gurney, J. M. and others},
+  title   = {{Casualty Care Implications of Large-Scale Combat Operations}},
+  journal = {Journal of Trauma and Acute Care Surgery}, volume = {95}, number = {2 Suppl 1}, pages = {S180--S187}, year = {2023},
+  note    = {VERIFIED. Casualties/day vignette (~3,000/100k); Kotwal golden-hour. NOTE: the 47.3\%/88.2\% figures are NOT here (see april2021_jrtc)},
+  url     = {https://pmc.ncbi.nlm.nih.gov/articles/PMC10389308/}
+}
+
+@techreport{jones2019_lsco_avf,
+  author      = {Jones, David R.},
+  title       = {{Large-Scale Combat Operations, Casualties, and the All-Volunteer Force}},
+  institution = {School of Advanced Military Studies, U.S. Army Command and General Staff College}, number = {DTIC AD1083499}, year = {2019},
+  note        = {VERIFIED. Author is MAJ David R. Jones (title page), not Walters -- corrected 2026-05-26. The disciplined lambda skeleton: echelon casualty rates (battalion 9.5\%/day, division ~1\%/day); 30/70 KIA/WIA split},
+  url         = {https://apps.dtic.mil/sti/pdfs/AD1083499.pdf}
+}
+
+@article{lawry2025_ukraine,
+  author  = {Lawry, L. and Korona-Bailey, J. and Kanagaratnam, and others},
+  title   = {{Qualitative Assessment of Point of Injury to Role 2+ Combat Casualty Care in Ukraine}},
+  journal = {Trauma Surgery \& Acute Care Open}, volume = {10}, pages = {e001674}, year = {2025},
+  note    = {VERIFIED. Contested-rear evacuation delay: hours to days; 24h POI, 48h battlefield. The lever's empirical range},
+  url     = {https://pmc.ncbi.nlm.nih.gov/articles/PMC12198803/}
+}
+
+@article{katzman2025_israel,
+  author  = {Katzman, Daniel and Kalman, Gilad and Almog, Ofer and Fogel, Itay},
+  title   = {{Deployment of Physician Resources and Innovative Medical Strategies in the 2023--2024 Israel--Hamas War: Israel's Strategy to Deliver Advanced Life Support and Whole Blood Transfusion to the Battlefield via Forward Medical Teams and the Impact on the Case Fatality Rate}},
+  journal = {Military Medicine}, volume = {190}, number = {9-10}, pages = {226--230}, year = {2025},
+  note    = {VERIFIED (full text on disk). The uncontested boundary case: CFR 6.7\% vs WWII 19.1\% / Iraq-Afghanistan 9.4\%, ISS>15 in 23\%, <70 min to hospital; CFR fell 14.8\% (2006) -> 9.2\% (2014) -> 6.7\% (2023-24) despite rising ISS, via forward whole blood + physician FMTs + rapid evac. DOI 10.1093/milmed/usae553},
+  url     = {https://academic.oup.com/milmed/article/190/9-10/226/7923216}
+}
+
+@article{bahouth2024_oct7,
+  author  = {Bahouth, H. and Slutzman, J. E. and others},
+  title   = {{October 7th 2023 Mass Casualty Incident in Southern Israel: Lessons for Emergency Preparedness and Management}},
+  journal = {(Soroka University Medical Center series)}, year = {2024},
+  note    = {VERIFIED. Measured arrival pulse: 83 casualties/hr peak, 673/24h -> justifies time-varying/batch arrivals},
+  url     = {https://pmc.ncbi.nlm.nih.gov/articles/PMC11556145/}
+}
+
+@article{april2021_jrtc,
+  author  = {April, M. D. and Stednick, P. J. and Christian, S. and others},
+  title   = {{A Descriptive Analysis of Notional Casualties Sustained at the Joint Readiness Training Center: Implications for Health Service Support during LSCO}},
+  journal = {Medical Journal (Army Medical Department)}, year = {2021},
+  note    = {PAYWALL (AMEDD Med J, no PMC; PMID 34251658). TRUE source of 47.3\% DOW / 88.2\%-at-POI -- NOTIONAL exercise output, not clinical. Austin to retrieve},
+  url     = {https://pubmed.ncbi.nlm.nih.gov/34251658/}
+}
+
+% ----------------------- D · ADJACENT MODELS (prior art) -----------
+
+@phdthesis{jenkins2018_medevac_mdp,
+  author = {Jenkins, P. R. and Robbins, M. J. and Lunday, B. J.},
+  title  = {{Examining Military MEDEVAC Dispatching Policies via a Markov Decision Process Model of a Controlled Queueing System}},
+  school = {Air Force Institute of Technology}, year = {2018},
+  note   = {VERIFIED (DTIC AD1051615). CLOSEST NEIGHBOR -- but dispatch (transport), not the treatment node; numerical policy, no lambda*, no reneging-as-DOW},
+  url    = {https://apps.dtic.mil/sti/citations/AD1051615}
+}
+
+@mastersthesis{bouma2005_metcom,
+  author = {Bouma, W. R.},
+  title  = {{Medical Evacuation and Treatment Capabilities Optimization Model (METCOM)}},
+  school = {Naval Postgraduate School}, year = {2005},
+  note   = {VERIFIED (DTIC ADA439323). Treatment-capacity OPTIMIZATION, not a saturation queue},
+  url    = {https://apps.dtic.mil/sti/tr/pdf/ADA439323.pdf}
+}
+
+@article{ferreira2024_surgqueue,
+  author  = {Ferreira, and others},
+  title   = {{Studying a Surgery Service Occupation through a Queues Model}},
+  journal = {arXiv:2403.05554}, year = {2024},
+  note    = {VERIFIED. Analytic surgical queue -- but CIVILIAN and a LOSS/blocking model (turned away at door), not reneging-as-death; no doctrinal mu},
+  url     = {https://arxiv.org/abs/2403.05554}
+}
+
+@techreport{thomas2021_rand,
+  author      = {Thomas, B. and others},
+  title       = {{Preparing for the Future of Combat Casualty Care}},
+  institution = {RAND Corporation}, number = {RR-A713-1}, year = {2021},
+  note        = {VERIFIED. "Hold more, hold longer" premise (epigraph-grade); JMPT SIMULATION we differentiate the analytic lambda* from},
+  url         = {https://www.rand.org/content/dam/rand/pubs/research_reports/RRA700/RRA713-1/RAND_RRA713-1.pdf}
+}
+
+@article{rl_casualtycare,
+  title   = {{A Reinforcement Learning Algorithm to Optimize Resource Utilization in Combat Casualty Care}},
+  journal = {(PMC12738704)},
+  note    = {VERIFIED. RL/optimization of resource use, not an analytic saturation result},
+  url     = {https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12738704/}
+}
+
+@mastersthesis{nps_fst_sim,
+  author = {Syvertson, and others},
+  title  = {{A Computer Simulation and Analysis of the Forward Surgical Team}},
+  school = {Naval Postgraduate School}, note = {VERIFIED (Calhoun). FST SIMULATION (also Cobb: theater-hospital bed optimization) -- not analytic},
+  url    = {https://calhoun.nps.edu/handle/10945/31496}
+}
+
+@article{simedis2024_vigwar,
+  title   = {{Advancing Military Medical Planning in LSCO: Insights from the NATO Vigorous Warrior 2024 Exercise (SIMEDIS)}},
+  journal = {Military Medicine}, volume = {189}, number = {Suppl 3}, pages = {456}, year = {2024},
+  note    = {PAYWALL (PMID 39160876). Canonical LSCO casualty-flow discrete-event SIMULATION; our analytic counterpart. Austin to retrieve},
+  url     = {https://academic.oup.com/milmed/article/189/Supplement_3/456/7735964}
+}
